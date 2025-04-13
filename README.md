@@ -124,6 +124,12 @@ should avoid allowing your application window to be resized below the height of 
   - [MacosColorWell](#macoscolorwell)
 </details>
 
+<details>
+<summary>Older macOS versions</summary>
+
+- [Older macOS versions](#older-macos-versions)
+</details>
+
 ---
 
 ## Contributing
@@ -472,8 +478,8 @@ A checkbox is a type of button that lets the user choose between two opposite st
 checkbox is considered on when it contains a checkmark and off when it's empty. A checkbox is almost always followed 
 by a title unless it appears in a checklist. [Learn more](https://developer.apple.com/design/human-interface-guidelines/macos/buttons/checkboxes/)
 
-| Unchecked                                                                                                                   | Checked                                                                                                                 | Mixed                                                                                                              |
-| --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| Unchecked                                            | Checked                                            | Mixed                                            |
+| ---------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------ |
 | ![Unchecked Checkbox](https://imgur.com/Pu4EDAE.png) | ![Checked Checkbox](https://imgur.com/CB3Kmwo.png) | ![Mixed Checkbox](https://imgur.com/T44rV38.png) |
 
 Here's an example of how to create a basic checkbox:
@@ -1011,4 +1017,56 @@ Example usage:
 MacosColorWell(
   onColorSelected: (color) => debugPrint('$color'),
 ),
+```
+
+## Older macOS versions
+
+If you’re targeting older macOS versions (Monterey and earlier), it is necessary to perform the following steps to make the [macos_window_utils](https://pub.dev/packages/macos_window_utils) plugin, which macos_ui depends on, work correctly:
+
+Open the `macos/Runner.xcworkspace` folder of your project using Xcode, press ⇧ + ⌘ + O and search for `MainFlutterWindow.swift`.
+
+Insert `import macos_window_utils` at the top of the file.
+Then, replace the code above the `super.awakeFromNib()`-line with the following code:
+
+```swift
+let windowFrame = self.frame
+let macOSWindowUtilsViewController = MacOSWindowUtilsViewController()
+self.contentViewController = macOSWindowUtilsViewController
+self.setFrame(windowFrame, display: true)
+
+/* Initialize the macos_window_utils plugin */
+MainFlutterWindowManipulator.start(mainFlutterWindow: self)
+
+RegisterGeneratedPlugins(registry: macOSWindowUtilsViewController.flutterViewController)
+```
+
+Assuming you're starting with the default configuration, the finished code should look something like this:
+
+```diff
+import Cocoa
+import FlutterMacOS
++import macos_window_utils
+
+class MainFlutterWindow: NSWindow {
+  override func awakeFromNib() {
+-   let flutterViewController = FlutterViewController.init()
+-   let windowFrame = self.frame
+-   self.contentViewController = flutterViewController
+-   self.setFrame(windowFrame, display: true)
+
+-   RegisterGeneratedPlugins(registry: flutterViewController)
+    
++   let windowFrame = self.frame
++   let macOSWindowUtilsViewController = MacOSWindowUtilsViewController()
++   self.contentViewController = macOSWindowUtilsViewController
++   self.setFrame(windowFrame, display: true)
+
++   /* Initialize the macos_window_utils plugin */
++   MainFlutterWindowManipulator.start(mainFlutterWindow: self)
+
++   RegisterGeneratedPlugins(registry: macOSWindowUtilsViewController.flutterViewController)
+
+    super.awakeFromNib()
+  }
+}
 ```

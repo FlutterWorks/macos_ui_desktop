@@ -1,3 +1,47 @@
+## [2.1.10]
+### 🔄 Updated 🔄
+* Make text field cursor color follow the user’s accent color if not explicitly set (thanks, [@driftwoodstudio](https://github.com/driftwoodstudio)).
+* Expose the `AccentColorListener` class to macos_ui users.
+
+## [2.1.9]
+### 🛠️ Fixed 🛠️
+* Fix incorrect highlighting and focusing behavior of `_MacosPopupMenuItemButton`.
+* Remove scrolling animation from dropdown menus when manipulating the focus with the keyboard to mimic native macOS behavior.
+
+## [2.1.8]
+### 🛠️ Fixed 🛠️
+* Fixed `shownByDefault` not being respected for the left sidebar of the `MacosWindow` (thanks, [@ShayperCool](https://github.com/ShayperCool)).
+
+## [2.1.7]
+### 🔄 Updated 🔄
+* Expose `WindowMainStateListener` and implement `overrideIsMainWindow` method to allow for the window’s main state to be overridden.
+
+## [2.1.6]
+### 🔄 Updated 🔄
+* add `section` parameter to `SidebarItem` to display an unclickable widget in the sidebar as a section header (thanks, [@whirlun](https://github.com/whirlun)).
+* Fix incorrect barrier color when calling `showMacosSheet` when dark mode is enabled.
+
+## [2.1.5]
+### 🛻 Migrated 🛻
+* Migrate to Flutter’s new Color API.
+
+## [2.1.4]
+### 🛠️ Fixed 🛠️
+* Fix incorrect barrier color when calling `showMacosAlertDialog` when dark mode is enabled.
+
+## [2.1.3]
+### 🛠️ Fixed 🛠️
+* Fix `ToolbarOverflowButton` only reacting to every second click.
+
+## [2.1.2]
+### 🛠️ Updated 🛠️
+* Add “Older macOS versions” section to README
+* Add Flutter version constraints to prevent the following error:
+  ```
+  Package validation found the following error:
+  * pubspec.yaml allows Flutter SDK version 1.9.x, which does not support the flutter.plugin.platforms key.
+    Please consider increasing the Flutter SDK requirement to ^1.10.0 (environment.sdk.flutter)
+  ```
 ## [2.1.1]
 * Fixed a bug where `MacosPulldownMenuItem` would not show an alert dialog when tapped.
 

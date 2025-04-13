@@ -92,7 +92,7 @@ class _MacosWindowState extends State<MacosWindow> {
   double _endSidebarWidth = 0.0;
   double _endSidebarDragStartWidth = 0.0;
   double _endSidebarDragStartPosition = 0.0;
-  bool _showSidebar = true;
+  late bool _showSidebar = widget.sidebar?.shownByDefault ?? true;
   late bool _showEndSidebar = widget.endSidebar?.shownByDefault ?? false;
   int _sidebarSlideDuration = 0;
   SystemMouseCursor _sidebarCursor = SystemMouseCursors.resizeColumn;
